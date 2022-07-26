@@ -18,13 +18,13 @@ function App() {
         items: DATA,
       },
     });
-  });
+  }, []);
 
   return (
     <div className="App">
       <ul className="items-container">
-        {state.items.map((item) => (
-          <li>{item}</li>
+        {state.items.map((item, index) => (
+          <li key={index}>{item}</li>
         ))}
       </ul>
     </div>
