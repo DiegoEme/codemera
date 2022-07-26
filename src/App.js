@@ -59,9 +59,9 @@ function App() {
 
   return (
     <div className="App">
-      <div>
+      <div className="items-form">
         <form onSubmit={onSubmit}>
-          <input type="text"  value={textInput} onChange={(e) => setTextInput(e.target.value)}/>
+          <input autoFocus type="text"  value={textInput} onChange={(e) => setTextInput(e.target.value)}/>
           <button type="submit">add</button>
         </form>
       </div>
@@ -69,10 +69,9 @@ function App() {
       <ul className="items-container">
         {state.items.map((item) => (
             <li key={item.id}>
-              {item.text}
+              <span>{item.text}</span>
               <button onClick={() => onDelete(item.id)}>del</button>
             </li>
-            
         ))}
       </ul>
     </div>
