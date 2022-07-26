@@ -1,6 +1,9 @@
 import { useEffect, useReducer,useState } from "react";
 import "./App.css";
+import InputForm from "./components/InputForm";
+import Items from "./components/Items";
 import reducer from "./reducer";
+import * as actions from "./actions"
 
 const DATA = [
   {
@@ -27,7 +30,7 @@ function App() {
 
   useEffect(() => {
     dispatch({
-      type: "set_items",
+      type: actions.SET_ITEMS,
       payload: {
         items: DATA,
       },
@@ -38,7 +41,7 @@ function App() {
     e.preventDefault()
     if(textInput === "") return 
     dispatch({
-      type: "add_item",
+      type: actions.ADD_ITEM,
       payload: {
         text: textInput
       }
@@ -49,7 +52,7 @@ function App() {
 
   const onDelete = (id) => {
     dispatch({
-      type: "delete_item",
+      type: actions.DELETE_ITEM,
       payload:{
         id
       }
@@ -60,19 +63,11 @@ function App() {
   return (
     <div className="App">
       <div className="items-form">
-        <form onSubmit={onSubmit}>
-          <input autoFocus type="text"  value={textInput} onChange={(e) => setTextInput(e.target.value)}/>
-          <button type="submit">add</button>
-        </form>
+        <InputForm onSubmit={onSubmit} setTextInput={setTextInput} textInput={textInput} />
       </div>
       
       <ul className="items-container">
-        {state.items.map((item) => (
-            <li key={item.id}>
-              <span>{item.text}</span>
-              <button onClick={() => onDelete(item.id)}>del</button>
-            </li>
-        ))}
+        <Items state={state} onDelete={onDelete}/>
       </ul>
     </div>
   );

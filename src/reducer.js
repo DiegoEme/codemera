@@ -1,14 +1,16 @@
+import * as actions from "./actions"
+
 let lastId = 3
 
 export default function redurer(state, action) {
   switch (action.type) {
-    case "set_items": {
+    case actions.SET_ITEMS: {
       return {
         ...state,
         items: state.items.concat(action.payload.items),
       };
     }
-    case "add_item": 
+    case actions.ADD_ITEM: 
       return {
         ...state,
         items: [
@@ -19,7 +21,7 @@ export default function redurer(state, action) {
           }
         ]
       }
-    case "delete_item": 
+    case actions.DELETE_ITEM: 
       return {
         ...state,
         items: state.items.filter((item) => item.id !== action.payload.id)
