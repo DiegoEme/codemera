@@ -34,7 +34,8 @@ function App() {
     });
   }, []);
 
-  const handleAdd = () => {
+  const onSubmit = (e) => {
+    e.preventDefault()
     if(textInput === "") return 
     dispatch({
       type: "add_item",
@@ -46,17 +47,32 @@ function App() {
     setTextInput("")
   }
 
+  const onDelete = (id) => {
+    dispatch({
+      type: "delete_item",
+      payload:{
+        id
+      }
+    })
+  }
+
 
   return (
     <div className="App">
       <div>
-        <input type="text"  value={textInput} onChange={(e) => setTextInput(e.target.value)}/>
-        <button onClick={handleAdd}>add</button>
+        <form onSubmit={onSubmit}>
+          <input type="text"  value={textInput} onChange={(e) => setTextInput(e.target.value)}/>
+          <button type="submit">add</button>
+        </form>
       </div>
       
       <ul className="items-container">
         {state.items.map((item) => (
-          <li key={item.id}>{item.text}</li>
+            <li key={item.id}>
+              {item.text}
+              <button onClick={() => onDelete(item.id)}>del</button>
+            </li>
+            
         ))}
       </ul>
     </div>
