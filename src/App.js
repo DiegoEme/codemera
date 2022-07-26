@@ -1,14 +1,28 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer,useState } from "react";
 import "./App.css";
 import reducer from "./reducer";
 
-const DATA = ["item 1", "item 2", "item 3"];
+const DATA = [
+  {
+    id: 1,
+    text: "item 1"
+  }, 
+  {
+    id: 2,
+    text: "item 2"
+  }, 
+  {
+    id: 3,
+    text: "item 3"
+  }
+];
 
 const initialState = {
   items: [],
 };
 
 function App() {
+  const [textInput, setTextInput] = useState("")
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -20,11 +34,29 @@ function App() {
     });
   }, []);
 
+  const handleAdd = () => {
+    if(textInput === "") return 
+    dispatch({
+      type: "add_item",
+      payload: {
+        text: textInput
+      }
+    })
+
+    setTextInput("")
+  }
+
+
   return (
     <div className="App">
+      <div>
+        <input type="text"  value={textInput} onChange={(e) => setTextInput(e.target.value)}/>
+        <button onClick={handleAdd}>add</button>
+      </div>
+      
       <ul className="items-container">
-        {state.items.map((item, index) => (
-          <li key={index}>{item}</li>
+        {state.items.map((item) => (
+          <li key={item.id}>{item.text}</li>
         ))}
       </ul>
     </div>
